@@ -1,0 +1,215 @@
+swagger: "2.0"
+info:
+  description: "This is a nftables server."
+  version: "1.0.0"
+  title: "Swagger NFTABLES"
+  contact:
+    email: "dev@samuel-berthe.fr"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+basePath: "/"
+tags:
+- name: "table"
+  description: "Operations about tables"
+- name: "chain"
+  description: "Operations about chains"
+- name: "rule"
+  description: "Operations about rules"
+schemes:
+- "http"
+paths:
+
+
+  /table:
+    post:
+      tags:
+      - "table"
+      summary: "Add a new table"
+      description: ""
+      operationId: "addTable"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Table object that needs to be added to nftables"
+        required: true
+        schema:
+          $ref: "#/definitions/Table"
+      responses:
+        422:
+          description: "Invalid input"
+
+    get:
+      tags:
+      - "table"
+      summary: "Finds tables"
+      operationId: "findTables"
+      produces:
+      - "application/json"
+      - "application/xml"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Table"
+
+
+
+  /table/{tableName}:
+    get:
+      tags:
+      - "table"
+      summary: "Finds table by name"
+      operationId: "findTableByName"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "tableName"
+        in: "path"
+        description: "Name of table to return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Table"
+
+
+
+  /table/{tableName}/chain:
+    get:
+      tags:
+      - "chain"
+      summary: "Finds chains"
+      operationId: "findChains"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "tableName"
+        in: "path"
+        description: "Name of table to search chain"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Chain"
+
+  /table/{tableName}/chain/{chainName}:
+    get:
+      tags:
+      - "chain"
+      summary: "Finds chain by name"
+      operationId: "findChainByName"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "tableName"
+        in: "path"
+        description: "Name of table to search chain"
+        required: true
+        type: "string"
+      - name: "chainName"
+        in: "path"
+        description: "Name of chain to return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Chain"
+
+
+
+
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Table:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      use:
+        type: "integer"
+        format: "int32"
+      flag:
+        type: "integer"
+        format: "int32"
+      family:
+        type: "string"
+        format: "byte"
+    xml:
+      name: "Table"
+  Chain:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      table:
+        $ref: "#/definitions/Table"
+      hooknum:
+        type: "integer"
+        format: "int32"
+      priority:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "integer"
+        format: "int32"
+      policy:
+        type: "integer"
+        format: "int32"
+    xml:
+      name: "Chain"
+  Rule:
+    type: "object"
+    properties:
+      table:
+        $ref: "#/definitions/Table"
+      chain:
+        $ref: "#/definitions/Chain"
+      position:
+        type: "integer"
+        format: "int64"
+      handle:
+        type: "integer"
+        format: "int64"
+      expr:
+        type: "array"
+        items:
+          type: "string"
+      user_data:
+        type: "string"
+        format: "byte"
+    xml:
+      name: "Rule"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
