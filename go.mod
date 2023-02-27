@@ -3,7 +3,7 @@ module github.com/samber/nft-http-api
 go 1.13
 
 require (
-	github.com/gin-gonic/gin v1.7.0
+	github.com/gin-gonic/gin v1.7.7
 	github.com/google/nftables v0.0.0-20191205170848-4525b500cb02
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/thoas/go-funk v0.5.0
