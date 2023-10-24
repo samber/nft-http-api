@@ -13,9 +13,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/thoas/go-funk v0.5.0
-	github.com/ugorji/go v1.1.7 // indirect
 	golang.org/x/arch v0.5.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
-	gopkg.in/yaml.v2 v2.2.8 // indirect
 )
